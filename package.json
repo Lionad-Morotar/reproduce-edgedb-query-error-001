@@ -1,0 +1,13 @@
+{
+  "name": "reproduce-001",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "db:dump": "edgedb dump .temp/db.back.$(date +%Y%m%d%H%M%S)",
+    "migration": "pnpm db:dump && edgedb migration create && edgedb migrate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
