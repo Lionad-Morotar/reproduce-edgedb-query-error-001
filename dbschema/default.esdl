@@ -1,24 +1,22 @@
 module default {
 
-  type FieldDataShort {
-    property short -> str {
-      constraint max_len_value(256);
+  scalar type DBStatus extending enum<_Normal, _Disabled>;
+
+  abstract type CommonObject {
+    required db_status: DBStatus {
+      default:= <DBStatus>"_Normal";
     }
-  }
-  type FieldDataLong {
-    property long -> str {
-      constraint max_len_value(512);
-    }
-  }
-  type FieldDataInt16 {
-    property int16s -> int16;
   }
 
-  type FieldData {
-    single link data -> FieldDataShort | FieldDataLong | FieldDataInt16 {
-      on source delete delete target if orphan;
-      on target delete allow;
-    };
+  abstract type SortableObjectDecimal {
+    property sort_decimal: decimal {
+      # delegated constraint exclusive;
+      default := 0;
+    }
+  }
+
+  type A extending CommonObject, SortableObjectDecimal {
+    property a: int16;
   }
 
 }
